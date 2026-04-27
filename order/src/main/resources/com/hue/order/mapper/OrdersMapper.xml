@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hue.order.mapper.OrdersMapper">
+
+    <resultMap id="BaseResultMap" type="com.hue.order.pojo.Orders">
+            <id property="id" column="id" />
+            <result property="orderNo" column="order_no" />
+            <result property="userId" column="user_id" />
+            <result property="windowId" column="window_id" />
+            <result property="orderType" column="order_type" />
+            <result property="totalAmount" column="total_amount" />
+            <result property="payAmount" column="pay_amount" />
+            <result property="status" column="status" />
+            <result property="remark" column="remark" />
+            <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_no,user_id,window_id,order_type,total_amount,
+        pay_amount,status,remark,create_time
+    </sql>
+</mapper>
