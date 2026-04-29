@@ -1,6 +1,7 @@
 package com.hue.order.service;
 
 import com.hue.common.dto.OrderCreateDTO;
+import com.hue.common.dto.OrderStatusDTO;
 import com.hue.common.vo.OrderVO;
 import com.hue.order.pojo.Orders;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -12,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface OrdersService extends IService<Orders> {
     OrderVO createOrder(OrderCreateDTO orderCreateDTO);
+    Boolean setOrderStatus(OrderStatusDTO orderStatusDTO);
+
 }

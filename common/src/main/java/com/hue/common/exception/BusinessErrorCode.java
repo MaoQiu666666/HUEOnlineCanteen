@@ -27,6 +27,7 @@ public enum BusinessErrorCode {
     // ------------------- 订单相关（4xxx）-------------------
     ORDER_NOT_FOUND(4001, "订单不存在"),
     ORDER_STATUS_ERROR(4002, "订单状态错误"),
+    UNKNOWN_ORDER_ACTION(40003,"不支持的订单操作类型！"),
 
     // ------------------- 权限相关（5xxx）-------------------
     PERMISSION_DENIED(5001, "权限不足"),

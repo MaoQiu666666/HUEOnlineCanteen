@@ -75,65 +75,26 @@ public class Orders {
      * 更新时间
      */
     private LocalDateTime updateTime;
+    /**
+     * 支付时间
+     */
+    private LocalDateTime payTime;
+    /**
+     * 接单时间
+     */
+    private LocalDateTime receivingTime;
+    /**
+     * 出餐时间
+     */
+    private LocalDateTime dispatchTime;
+    /**
+     * 订单完成时间
+     */
+    private LocalDateTime completionTime;
+    /**
+     * 订单取消时间
+     */
+    private LocalDateTime cancelTime;
 
-    @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Orders other = (Orders) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderNo() == null ? other.getOrderNo() == null : this.getOrderNo().equals(other.getOrderNo()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getWindowId() == null ? other.getWindowId() == null : this.getWindowId().equals(other.getWindowId()))
-            && (this.getOrderType() == null ? other.getOrderType() == null : this.getOrderType().equals(other.getOrderType()))
-            && (this.getTotalAmount() == null ? other.getTotalAmount() == null : this.getTotalAmount().equals(other.getTotalAmount()))
-            && (this.getPayAmount() == null ? other.getPayAmount() == null : this.getPayAmount().equals(other.getPayAmount()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
-    }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderNo() == null) ? 0 : getOrderNo().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getWindowId() == null) ? 0 : getWindowId().hashCode());
-        result = prime * result + ((getOrderType() == null) ? 0 : getOrderType().hashCode());
-        result = prime * result + ((getTotalAmount() == null) ? 0 : getTotalAmount().hashCode());
-        result = prime * result + ((getPayAmount() == null) ? 0 : getPayAmount().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", orderNo=").append(orderNo);
-        sb.append(", userId=").append(userId);
-        sb.append(", windowId=").append(windowId);
-        sb.append(", orderType=").append(orderType);
-        sb.append(", totalAmount=").append(totalAmount);
-        sb.append(", payAmount=").append(payAmount);
-        sb.append(", status=").append(status);
-        sb.append(", remark=").append(remark);
-        sb.append(", createTime=").append(createTime);
-        sb.append("]");
-        return sb.toString();
-    }
 }

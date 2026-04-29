@@ -1,7 +1,11 @@
 package com.hue.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hue.common.dto.OrderCreateDTO;
+import com.hue.common.dto.OrderStatusDTO;
+import com.hue.common.exception.BusinessErrorCode;
+import com.hue.common.exception.BusinessException;
 import com.hue.common.util.OrderNoUtil;
 import com.hue.common.vo.OrderVO;
 import com.hue.order.pojo.Orders;
@@ -33,6 +37,41 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
         OrderVO orderVO = new OrderVO();
         BeanUtils.copyProperties(order, orderVO);
         return orderVO;
+    }
+
+    //设置订单状态；
+
+    @Override
+    public Boolean setOrderStatus(OrderStatusDTO orderStatusDTO) {
+        LocalDateTime now = LocalDateTime.now();
+        LambdaUpdateWrapper<Orders> wrapper = new LambdaUpdateWrapper<>();
+        wrapper
+                .eq(Orders::getOrderNo, orderStatusDTO .getOrderNo());
+        switch (orderStatusDTO.getAction()) {
+            case "PAYED":
+                wrapper.set(Orders::getPayTime, now)
+                        .set(Orders::getStatus, 2);
+                break;
+            case "RECEiVED":
+                wrapper.set(Orders::getReceivingTime, now)
+                        .set(Orders::getStatus, 3);
+                break;
+            case "DISPATCHED":
+                wrapper.set(Orders::getDispatchTime, now)
+                        .set(Orders::getStatus, 4);
+                break;
+            case "COMPLETED":
+                wrapper.set(Orders::getCompletionTime, now)
+                        .set(Orders::getStatus, 5);
+                break;
+            case "CANCEL":
+                wrapper.set(Orders::getCancelTime, now)
+                        .set(Orders::getStatus, 6);
+                break;
+            default:
+                throw new BusinessException(BusinessErrorCode.UNKNOWN_ORDER_ACTION);
+        }
+        return baseMapper.update(null,wrapper) > 0;
     }
 }
 
