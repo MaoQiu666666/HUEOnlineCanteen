@@ -9,6 +9,7 @@
         <module>user</module>
         <module>dish</module>
         <module>order</module>
+        <module>gatawy</module>
     </modules>
 
     <groupId>com.hue</groupId>

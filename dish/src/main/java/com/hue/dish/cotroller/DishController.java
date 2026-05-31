@@ -2,6 +2,7 @@ package com.hue.dish.cotroller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.hue.common.dto.DishCreateDTO;
+import com.hue.common.dto.DishStockDTO;
 import com.hue.common.feign.DishFeignClient;
 import com.hue.common.result.Result;
 import com.hue.dish.pojo.Dish;
@@ -41,15 +42,23 @@ public class DishController implements DishFeignClient {
     //==========     远程调用服务    ==========
 
     /**
-     * 1. 下单时减库存
+     * 1. 下单时减库存，取消时加回
      * @param dishId 菜品id
      * @param account 下单数量
      */
     @Override
     @PostMapping("/minusStock")
-    public void minusStock(Integer dishId, Integer account) {
-        dishService.minusStock(dishId,account);
+    public Result<Void> minusStock(@RequestBody DishStockDTO dishStockDTO) {
+        dishService.minusStock(dishStockDTO);
+        return Result.success();
     }
+    @Override
+    @PostMapping("addStock")
+    public Result<Void> addStock(@RequestBody DishStockDTO dishStockDTO) {
+        dishService.addStock(dishStockDTO);
+        return Result.success();
+    }
+
 
 
     // ==========     商家端操作接口     ==========

@@ -1,17 +1,21 @@
 package com.hue.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hue.common.dto.OrderCreateDTO;
 import com.hue.common.dto.OrderStatusDTO;
 import com.hue.common.exception.BusinessErrorCode;
 import com.hue.common.exception.BusinessException;
+import com.hue.common.feign.DishFeignClient;
+import com.hue.common.result.Result;
 import com.hue.common.util.OrderNoUtil;
 import com.hue.common.vo.OrderVO;
 import com.hue.order.pojo.Orders;
 import com.hue.order.service.OrdersService;
 import com.hue.order.mapper.OrdersMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +28,9 @@ import java.time.LocalDateTime;
 @Service
 public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
     implements OrdersService{
+
+    @Autowired
+    private DishFeignClient dishFeignClient;
 
     @Override
     public OrderVO createOrder(OrderCreateDTO orderCreateDTO) {
@@ -45,10 +52,13 @@ public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders>
     public Boolean setOrderStatus(OrderStatusDTO orderStatusDTO) {
         LocalDateTime now = LocalDateTime.now();
         LambdaUpdateWrapper<Orders> wrapper = new LambdaUpdateWrapper<>();
-        wrapper
-                .eq(Orders::getOrderNo, orderStatusDTO .getOrderNo());
+        LambdaQueryWrapper<Orders> queryWrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Orders::getOrderNo, orderStatusDTO .getOrderNo());
+        queryWrapper.eq(Orders::getOrderNo, orderStatusDTO.getOrderNo());
         switch (orderStatusDTO.getAction()) {
             case "PAYED":
+                Orders order = this.getOne(queryWrapper);
+
                 wrapper.set(Orders::getPayTime, now)
                         .set(Orders::getStatus, 2);
                 break;

@@ -3,6 +3,7 @@ package com.hue.dish.service.impl;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hue.common.dto.DishCreateDTO;
+import com.hue.common.dto.DishStockDTO;
 import com.hue.dish.pojo.Dish;
 import com.hue.dish.service.DishService;
 import com.hue.dish.mapper.DishMapper;
@@ -26,15 +27,26 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish>
 
     //下单减库存，远程调用服务
     @Override
-    public void minusStock(Integer dishId, Integer account) {
-        Dish dish = this.getById(dishId);
+    public void minusStock(DishStockDTO dishStockDTO) {
+        Dish dish = this.getById(dishStockDTO.getDishId());
         if(dish == null) {
             throw new RuntimeException("菜品不存在！");
         }
-        int newStock = dish.getStock() - account;
+        int newStock = dish.getStock() - dishStockDTO.getAccount();
         if (newStock < 0) {
             throw new RuntimeException("库存不足!");
         }
+        dish.setStock(newStock);
+        this.updateById(dish);
+    }
+
+    @Override
+    public void addStock(DishStockDTO dishStockDTO) {
+        Dish dish = this.getById(dishStockDTO.getDishId());
+        if(dish == null) {
+            throw new RuntimeException("菜品不存在！");
+        }
+        int newStock = dish.getStock() + dishStockDTO.getAccount();
         dish.setStock(newStock);
         this.updateById(dish);
     }

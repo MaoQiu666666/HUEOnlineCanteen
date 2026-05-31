@@ -1,6 +1,7 @@
 package com.hue.dish.service;
 
 import com.hue.common.dto.DishCreateDTO;
+import com.hue.common.dto.DishStockDTO;
 import com.hue.dish.pojo.Dish;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,7 +14,8 @@ import java.math.BigDecimal;
 */
 public interface DishService extends IService<Dish> {
     //远程调用服务，下单时减库存
-    void minusStock(Integer dishId, Integer account);
+    void minusStock(DishStockDTO dishStockDTO);
+    void addStock(DishStockDTO dishStockDTO);
     //创建菜品
     Long createDish(DishCreateDTO dishCreateDTO);
     //上下架菜品

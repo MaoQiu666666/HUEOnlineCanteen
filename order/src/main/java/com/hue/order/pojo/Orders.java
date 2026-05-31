@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
+import com.hue.common.dto.DishStockDTO;
 import lombok.Data;
 
 /**
@@ -95,6 +98,6 @@ public class Orders {
      * 订单取消时间
      */
     private LocalDateTime cancelTime;
-
+    
 
 }
